@@ -101,51 +101,44 @@ export default function Dashboard() {
   into today's delivery status.
   */
 
-  function buildSession(session) {
+function buildSession(session) {
+  return customers
+    .filter(
+      customer =>
+        customer[session]?.enabled
+    )
+    .map(customer => {
+      const delivery =
+        deliveries.find(
+          item =>
+            item.customerId?._id ===
+              customer._id &&
+            item.session === session
+        );
 
-    return customers
+      return {
+        ...customer,
 
-      .filter(
-        customer =>
-          customer[session]?.enabled
-      )
+        delivered:
+          delivery?.delivered ?? false,
 
-      .map(customer => {
+        // IMPORTANT:
+        // Always use customer's regular configured litres
+        litres:
+          Number(customer[session]?.litres || 0),
 
-        const delivery =
-          deliveries.find(
-            item =>
-              item.customerId?._id ===
-                customer._id &&
-              item.session ===
-                session
-          );
+        paid:
+          delivery?.paid ?? false,
 
+        deliveryId:
+          delivery?._id,
 
-        return {
-
-          ...customer,
-
-          delivered:
-            delivery?.delivered ??
-            false,
-
-          litres:
-            delivery?.litres ??
-            customer[session].litres,
-
-          paid:
-            delivery?.paid ??
-            false,
-
-          deliveryId:
-            delivery?._id
-
-        };
-
-      });
-
-  }
+        // Optional: keep actual delivery litres separately
+        deliveredLitres:
+          Number(delivery?.litres || 0),
+      };
+    });
+}
 
 
   const morning =
@@ -174,57 +167,59 @@ export default function Dashboard() {
   One tap delivery.
   */
 
-  async function toggleDelivery(
-    customer,
-    session
-  ) {
-
-    try {
-
-      const existing =
-        deliveries.find(
-          item =>
-            item.customerId?._id ===
-              customer._id &&
-            item.session ===
-              session
-        );
-
-
-      await api.post(
-        "/deliveries/mark",
-        {
-
-          customerId:
-            customer._id,
-
-          date,
-
-          session,
-
-          litres:
-            customer.litres,
-
-          delivered:
-            !customer.delivered,
-
-          paid:
-            existing?.paid ??
-            false
-
-        }
+ async function toggleDelivery(
+  customer,
+  session
+) {
+  try {
+    const existing =
+      deliveries.find(
+        item =>
+          item.customerId?._id ===
+            customer._id &&
+          item.session === session
       );
 
+    // Always get the regular litres
+    // from the customer's configuration.
+    const regularLitres =
+      Number(
+        customer[session]?.litres || 0
+      );
 
-      loadDashboard();
+    const nextDelivered =
+      !customer.delivered;
 
-    } catch (error) {
+    await api.post(
+      "/deliveries/mark",
+      {
+        customerId:
+          customer._id,
 
-      console.error(error);
+        date,
 
-    }
+        session,
 
+        litres:
+          regularLitres,
+
+        delivered:
+          nextDelivered,
+
+        paid:
+          existing?.paid ?? false,
+      }
+    );
+
+    await loadDashboard();
+
+  } catch (error) {
+    console.error(
+      "Toggle delivery error:",
+      error
+    );
   }
+}
 
 
   const totalValue =
