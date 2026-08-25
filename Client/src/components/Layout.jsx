@@ -1,6 +1,11 @@
 import { NavLink } from "react-router-dom";
 
-import { Milk, LayoutDashboard, Users, BarChart3 } from "lucide-react";
+import {
+  Milk,
+  LayoutDashboard,
+  Users,
+  BarChart3,
+} from "lucide-react";
 
 const navigation = [
   {
@@ -25,19 +30,22 @@ const navigation = [
 export default function Layout({ children }) {
   return (
     <div className="min-h-screen bg-cream">
+
+      {/* ============================= */}
       {/* HEADER */}
+      {/* ============================= */}
 
       <header
         className="
-    sticky
-    top-0
-    z-40
-    border-b
-    border-black/5
-    bg-cream/95
-    text-ink
-    backdrop-blur-xl
-  "
+          sticky
+          top-0
+          z-40
+          border-b
+          border-black/5
+          bg-cream/95
+          text-ink
+          backdrop-blur-xl
+        "
       >
         <div
           className="
@@ -50,9 +58,11 @@ export default function Layout({ children }) {
             py-4
           "
         >
+
           {/* BRAND */}
 
           <div className="flex items-center gap-3">
+
             <div
               className="
                 grid
@@ -65,10 +75,14 @@ export default function Layout({ children }) {
                 shadow-soft
               "
             >
-              <Milk size={23} />
+              <Milk
+                size={23}
+                strokeWidth={2.5}
+              />
             </div>
 
             <div>
+
               <div
                 className="
                   text-lg
@@ -90,10 +104,15 @@ export default function Layout({ children }) {
               >
                 daily milk ledger
               </div>
+
             </div>
+
           </div>
 
+
+          {/* ============================= */}
           {/* DESKTOP NAVIGATION */}
+          {/* ============================= */}
 
           <nav
             className="
@@ -106,124 +125,223 @@ export default function Layout({ children }) {
               sm:flex
             "
           >
-            {navigation.map(({ path, label, icon: Icon }) => (
-              <NavLink
-                key={path}
-                to={path}
-                className={({ isActive }) => `
-                    flex
-                    items-center
-                    gap-2
+
+            {navigation.map(
+              ({
+                path,
+                label,
+                icon: Icon,
+              }) => (
+
+                <NavLink
+                  key={path}
+                  to={path}
+                  className="
                     rounded-xl
-                    px-4
-                    py-2
-                    text-sm
-                    font-bold
-                    transition
+                    transition-all
+                  "
+                >
 
-                    ${
-                      isActive
-                        ? "bg-ink text-blue-600"
-                        : "text-black/50 hover:bg-black/5"
-                    }
-                  `}
-              >
-                <Icon size={16} />
+                  {({ isActive }) => (
 
-                {label}
-              </NavLink>
-            ))}
+                    <div
+                      className={`
+                        flex
+                        items-center
+                        gap-2
+                        rounded-xl
+                        px-4
+                        py-2
+                        text-sm
+                        font-bold
+
+                        ${
+                          isActive
+                            ? "bg-ink text-blue-600"
+                            : "text-black/50 hover:bg-black/5"
+                        }
+                      `}
+                    >
+
+                      <Icon
+                        size={16}
+                        strokeWidth={2.5}
+                        className={
+                          isActive
+                            ? "text-blue-600"
+                            : "text-black/50"
+                        }
+                      />
+
+                      <span
+                        className={
+                          isActive
+                            ? "text-blue-600"
+                            : "text-black/50"
+                        }
+                      >
+                        {label}
+                      </span>
+
+                    </div>
+
+                  )}
+
+                </NavLink>
+
+              )
+            )}
+
           </nav>
+
         </div>
       </header>
 
+
+      {/* ============================= */}
       {/* PAGE */}
+      {/* ============================= */}
 
       <main
         className="
           mx-auto
+          min-h-[calc(100vh-68px)]
           max-w-6xl
           px-4
           py-6
-          pb-24
+          pb-28
+          text-ink
+
+          sm:px-6
+          sm:py-6
+          sm:pb-8
         "
       >
         {children}
       </main>
 
-      {/* MOBILE NAV */}
 
+      {/* ============================= */}
       {/* MOBILE NAVIGATION */}
+      {/* ============================= */}
 
       <nav
         className="
-    fixed
-    bottom-0
-    left-0
-    right-0
-    z-50
+          fixed
+          bottom-0
+          left-0
+          right-0
+          z-50
 
-    border-t
-    border-black/5
+          border-t
+          border-black/5
 
-    bg-white/95
-    px-2
-    pt-2
+          bg-white/95
 
-    pb-[calc(env(safe-area-inset-bottom)+8px)]
+          px-2
+          pt-2
 
-    shadow-[0_-8px_30px_rgba(0,0,0,0.08)]
+          pb-[calc(env(safe-area-inset-bottom)+8px)]
 
-    backdrop-blur-xl
+          shadow-[0_-8px_30px_rgba(0,0,0,0.08)]
 
-    sm:hidden
-  "
+          backdrop-blur-xl
+
+          sm:hidden
+        "
       >
+
         <div
           className="
-      mx-auto
-      flex
-      max-w-md
-      items-center
-      justify-around
-    "
-        >
-          {navigation.map(({ path, label, icon: Icon }) => (
-            <NavLink
-              key={path}
-              to={path}
-              className={({ isActive }) => `
+            mx-auto
             flex
-            min-w-[78px]
-            flex-col
+            max-w-md
             items-center
-            justify-center
-            gap-1
+            justify-around
+          "
+        >
 
-            rounded-2xl
+          {navigation.map(
+            ({
+              path,
+              label,
+              icon: Icon,
+            }) => (
 
-            px-3
-            py-2
+              <NavLink
+                key={path}
+                to={path}
+                className="flex-1"
+              >
 
-            text-[10px]
-            font-black
+                {({ isActive }) => (
 
-            transition-all
+                  <div
+                    className={`
+                      mx-auto
+                      flex
+                      min-w-[78px]
+                      max-w-[100px]
+                      flex-col
+                      items-center
+                      justify-center
+                      gap-1
 
-            ${
-              isActive
-                ? "bg-ink text-white shadow-sm"
-                : "text-black/40 hover:bg-black/5"
-            }
-          `}
-            >
-              <Icon size={19} strokeWidth={2.5} />
+                      rounded-2xl
 
-              <span>{label}</span>
-            </NavLink>
-          ))}
+                      px-3
+                      py-2
+
+                      text-[10px]
+                      font-black
+
+                      transition-all
+
+                      ${
+                        isActive
+                          ? "bg-ink shadow-sm"
+                          : "bg-transparent hover:bg-black/5"
+                      }
+                    `}
+                  >
+
+                    {/* ICON */}
+
+                    <Icon
+                      size={19}
+                      strokeWidth={2.5}
+                      className={
+                        isActive
+                          ? "text-blue-600"
+                          : "text-black/50"
+                      }
+                    />
+
+                    {/* LABEL */}
+
+                    <span
+                      className={
+                        isActive
+                          ? "text-blue-600"
+                          : "text-black/50"
+                      }
+                    >
+                      {label}
+                    </span>
+
+                  </div>
+
+                )}
+
+              </NavLink>
+
+            )
+          )}
+
         </div>
+
       </nav>
+
     </div>
   );
 }
