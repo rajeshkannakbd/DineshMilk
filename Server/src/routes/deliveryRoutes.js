@@ -1,7 +1,7 @@
 import express from "express";
 
-import Delivery from "../models/Delivery.js";
-import Customer from "../models/Customer.js";
+import Delivery from "../Models/Delivery.js";
+import Customer from "../Models/Customer.js";
 
 const router = express.Router();
 
