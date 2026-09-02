@@ -254,10 +254,10 @@ function buildSession(session) {
 
   return (
     <div className="space-y-6">
-      <section className="grain overflow-hidden rounded-[32px] bg-ink p-6 text-white shadow-soft sm:p-8">
+      <section className="grain overflow-hidden rounded-[32px] bg-ink p-6 text-black shadow-soft sm:p-8">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-xs font-black uppercase tracking-[.25em] text-white/45">
+            <p className="text-xs font-black uppercase tracking-[.25em] text-gray-500">
               Today&apos;s route
             </p>
             <h1 className="mt-2 text-4xl font-black tracking-tight sm:text-5xl">
